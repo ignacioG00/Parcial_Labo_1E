@@ -1,0 +1,19 @@
+01:48:25 **** Clean-only build of configuration Debug for project PP ****
+rm -rf src/Pantalla.d src/Entidades.d src/PP.d src/Biblioteca.o PP.exe src/Biblioteca.d src/Pantalla.o src/Entidades.o src/PP.o 
+01:48:58 **** Rebuild of configuration Debug for project PP ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Entidades.o" "..\\src\\Entidades.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Pantalla.o" "..\\src\\Pantalla.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Biblioteca.o" "..\\src\\Biblioteca.c" 
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\PP.o" "..\\src\\PP.c" 
+gcc -o PP.exe "src\\Biblioteca.o" "src\\Entidades.o" "src\\PP.o" "src\\Pantalla.o" 
+01:55:33 **** Incremental Build of configuration Debug for project PP ****
+Info: Internal Builder is used for build
+gcc -O0 -g3 -Wall -c -fmessage-length=0 -o "src\\Pantalla.o" "..\\src\\Pantalla.c" 
+gcc -o PP.exe "src\\Biblioteca.o" "src\\Entidades.o" "src\\PP.o" "src\\Pantalla.o" 
+c:/mingw/bin/../lib/gcc/mingw32/6.3.0/../../../../mingw32/bin/ld.exe: cannot open output file PP.exe: Permission denied
+collect2.exe: error: ld returned 1 exit status
+01:55:36 **** Incremental Build of configuration Debug for project PP ****
+Info: Internal Builder is used for build
+gcc -o PP.exe "src\\Biblioteca.o" "src\\Entidades.o" "src\\PP.o" "src\\Pantalla.o" 
+Info: Nothing to build for PP

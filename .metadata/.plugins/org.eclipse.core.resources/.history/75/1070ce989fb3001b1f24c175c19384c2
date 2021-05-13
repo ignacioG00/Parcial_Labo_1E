@@ -1,0 +1,58 @@
+/*
+ * Orquesta.h
+ *
+ *  Created on: 12 may. 2021
+ *      Author: ignac
+ */
+
+#ifndef ORQUESTA_H_
+#define ORQUESTA_H_
+#include "biblioteca.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+//*** DEFINE
+#define MAX_CHARS_CADENAS 30
+#define LIBRE 0
+#define OCUPADO 1
+#define BAJA -1
+
+#define sinfonica 1
+#define filarmonica 2
+#define camara 3
+
+//*** ESTRUCTURA
+
+typedef struct {
+	int idOrquesta;
+	char nombre[MAX_CHARS_CADENAS];
+	char lugar[MAX_CHARS_CADENAS];
+	int tipoOrquesta;
+	int isEmpty;
+} eOrquesta;
+//***
+
+/** INICIO CABECERAS DE FUNCION*/
+void eOrquesta_Inicializar(eOrquesta array[], int TAM);
+int eOrquesta_ObtenerID(void);
+int eOrquesta_ObtenerIndexLibre(eOrquesta array[], int TAM);
+int eOrquesta_BuscarPorID(eOrquesta array[], int TAM, int ID);
+void eOrquesta_MostrarUno(eOrquesta Orquesta);
+int eOrquesta_MostrarTodos(eOrquesta array[], int TAM);
+int eOrquesta_MostrarDadosDeBaja(eOrquesta array[], int TAM);
+
+/** SORT */
+//CRITERIO -> -1 = MENOR A MAYOR
+//CRITERIO ->  1 = MAYOR A MENOR
+int eOrquesta_Sort(eOrquesta array[], int TAM, int criterio);
+
+//ABM
+eOrquesta eOrquesta_CargarDatos(void);//modificar
+eOrquesta eOrquesta_ModificarUno(eOrquesta Orquesta);//modificar
+int eOrquesta_Alta(eOrquesta array[], int TAM);
+int eOrquesta_Baja(eOrquesta array[], int TAM);
+int eOrquesta_Modificacion(eOrquesta array[], int TAM);
+/** FIN CABECERAS DE FUNCION*/
+
+#endif /* ORQUESTA_H_ */

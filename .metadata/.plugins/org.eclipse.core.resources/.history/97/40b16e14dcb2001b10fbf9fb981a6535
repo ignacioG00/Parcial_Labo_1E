@@ -1,0 +1,16 @@
+/*
+ * Entidades.c
+ *
+ *  Created on: 12 may. 2021
+ *      Author: ignac
+ */
+#ifndef ENTIDADES_C_
+#define ENTIDADES_C_
+
+#include "Orquesta.h"
+eOrquesta eOrquesta_CargarDatos(void);
+eOrquesta eOrquesta_ModificarUno(eOrquesta Orquesta);
+int eOrquesta_Alta(eOrquesta array[], int TAM);
+int eOrquesta_Baja(eOrquesta array[], int TAM);
+int eOrquesta_Modificacion(eOrquesta array[], int TAM);
+#endif /* ENTIDADES_C_ */

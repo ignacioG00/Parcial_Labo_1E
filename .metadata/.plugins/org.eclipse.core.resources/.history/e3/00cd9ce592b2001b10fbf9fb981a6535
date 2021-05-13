@@ -1,0 +1,27 @@
+/*
+ * Biblioteca.h
+ *
+ *  Created on: 11 may. 2021
+ *      Author: ignac
+ */
+
+#ifndef BIBLIOTECA_H_
+#define BIBLIOTECA_H_
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <ctype.h>
+#define TAM_BUFFER 1000
+
+//Validaciones
+int validate_OnlyNumberInt(char* pData);
+int validate_OnlyNumberFloat(char *pData);
+int validate_OnlyAlphabet(char *pData);
+int validate_OnlyAlphabetWithSpaces(char *pData);
+
+//GET
+int myGets(char* cadena,int longitud);
+int getFloat(int* pResultado);
+
+#endif /* BIBLIOTECA_H_ */

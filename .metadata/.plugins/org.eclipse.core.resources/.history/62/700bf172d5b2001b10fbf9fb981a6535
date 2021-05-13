@@ -1,0 +1,50 @@
+/*
+ * Orquesta.h
+ *
+ *  Created on: 12 may. 2021
+ *      Author: ignac
+ */
+
+#ifndef ORQUESTA_H_
+#define ORQUESTA_H_
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+//*** DEFINE
+#define MAX_CHARS_CADENAS 30
+#define LIBRE 0
+#define OCUPADO 1
+#define BAJA -1
+
+//*** ESTRUCTURA
+typedef struct {
+	int idGen;
+	int isEmpty;
+} eOrquesta;
+//***
+
+/** INICIO CABECERAS DE FUNCION*/
+void eOrquesta_Inicializar(eOrquesta array[], int TAM);
+int eOrquesta_ObtenerID(void);
+int eOrquesta_ObtenerIndexLibre(eOrquesta array[], int TAM);
+int eOrquesta_BuscarPorID(eOrquesta array[], int TAM, int ID);
+void eGen_MostrarUno(eOrquesta Gen);
+int eGen_MostrarTodos(eOrquesta array[], int TAM);
+int eGen_MostrarDadosDeBaja(eOrquesta array[], int TAM);
+
+/** SORT */
+//CRITERIO -> -1 = MENOR A MAYOR
+//CRITERIO ->  1 = MAYOR A MENOR
+int eGen_Sort(eOrquesta array[], int TAM, int criterio);
+
+//ABM
+eOrquesta eGen_CargarDatos(void);
+eOrquesta eGen_ModificarUno(eOrquesta Gen);
+int eGen_Alta(eOrquesta array[], int TAM);
+int eGen_Baja(eOrquesta array[], int TAM);
+int eGen_Modificacion(eOrquesta array[], int TAM);
+/** FIN CABECERAS DE FUNCION*/
+
+#endif /* ORQUESTA_H_ */
