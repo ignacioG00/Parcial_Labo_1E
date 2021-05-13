@@ -50,6 +50,16 @@ int main(void) {
 			system("pause");
 			break;
 		case 2:
+			//MODIFICACION
+			if (eContribuyente_Modificacion(Contribuyente, TAM_ESTRUCTURA)) {
+				puts("\n * MODIFICACION DE Contribuyente EXITOSA\n");
+				eContribuyente_MostrarTodos(Contribuyente, TAM_ESTRUCTURA);
+			} else {
+				puts("\n * MODIFICACION DE Contribuyente CANCELADA");
+			}
+			system("pause");
+			break;
+		case 3:
 			//BAJA
 			if (eContribuyente_Baja(Contribuyente, TAM_ESTRUCTURA)) {
 				puts("\n * BAJA DE Contribuyente EXITOSA");
@@ -59,7 +69,8 @@ int main(void) {
 			}
 			system("pause");
 			break;
-		case 3:
+
+		case 4:
 			//IMPRIMIR Contribuyente
 			if(eContribuyente_MostrarTodos(Contribuyente, TAM_ESTRUCTURA))
 			{
@@ -67,16 +78,6 @@ int main(void) {
 			}else{
 				puts("NO EXISTE CONTRIBUYENTE CARGADO.");
 			}
-			break;
-		case 4:
-			//MODIFICACION
-			if (eContribuyente_Modificacion(Contribuyente, TAM_ESTRUCTURA)) {
-				puts("\n * MODIFICACION DE Contribuyente EXITOSA\n");
-				eContribuyente_MostrarTodos(Contribuyente, TAM_ESTRUCTURA);
-			} else {
-				puts("\n * MODIFICACION DE Contribuyente CANCELADA");
-			}
-			system("pause");
 			break;
 		case 5:
 			//ORDENAR Contribuyente

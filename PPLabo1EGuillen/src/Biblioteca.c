@@ -457,15 +457,11 @@ float ArraySort_Float(float *pArray,int TAM, int criterio)
 void menu(void)
 {
 	puts("BIENVENIDOS\n");
-	puts("1 - ALTA");
-	puts("2 - BAJA ");
-	puts("3 - IMPRIMIR ");
-	puts("4 - MODIFICAR ");
-	puts("5 - ORDENAR ");
-	puts("6 - ELIMINAR ");
-	puts("7 - IMPRIMIR ");
-	puts("8 - AGREGAR ");
-	puts("9 - IMPRIMIR ");
+	puts("1 - ALTA CONTRIBUYENTE");
+	puts("2 - MODIFICAR CONTRIBUYENTE");
+	puts("3 - BAJA DE CONTRIBUYENTE");
+	puts("4 - RECAUDACION");
+
 }
 
 

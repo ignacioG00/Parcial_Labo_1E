@@ -158,7 +158,7 @@ eContribuyente eContribuyente_ModificarUno(eContribuyente Contribuyente) {
 	/** MODIFICAR DATOS NECESARIOS PARA EL "MODIFICAR" */
 	int opc;
 	printf("INGRESE QUE QUIERE MODIFICAR: \n");
-	opc=get_IntRange("\t1 - NOMBRE \n \t2 - PRECIO \n \t3 - TIPO DE Contribuyente \n\t4 - DIRECCION\n-","ERROR REINGRESE EL QUE QUIERE MODIFICAR: "
+	opc=get_IntRange("\t1 - NOMBRE \n \t2 - APELLIDO \n \t3 - CUIL \n\n-","ERROR REINGRESE EL QUE QUIERE MODIFICAR:\n "
 			"\t1 - NOMBRE \n \t2 - PRECIO \n \t3 - TIPO DE Contribuyente \n \t4 - DIRECCION\n-",1,3);
 	switch(opc){
 		case 1:
