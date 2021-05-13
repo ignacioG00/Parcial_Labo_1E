@@ -10,8 +10,8 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "Entidades.h"
 #include "Biblioteca.h"
+#include "Informes.h"
 #define TAM_ESTRUCTURA 5
 
 int main(void) {
@@ -21,10 +21,10 @@ int main(void) {
 	int criterioDeOrdenamiento;
 
 	//CREO ARRAY DE ESTRUCTURA
-	ePantalla Pantalla[TAM_ESTRUCTURA];
+	eContribuyente Contribuyente[TAM_ESTRUCTURA];
 
 	//INICIALIAZO ARRAY DE ESTRUCTURA
-	ePantalla_Inicializar(Pantalla, TAM_ESTRUCTURA);
+	eContribuyente_Inicializar(Contribuyente, TAM_ESTRUCTURA);
 
 	//BUCLE DE MENU
 	do {
@@ -42,8 +42,8 @@ int main(void) {
 			break;
 		case 1:
 			//ALTA
-			if (ePantalla_Alta(Pantalla, TAM_ESTRUCTURA)) {
-				puts(" * Pantalla DADO DE ALTA EXITOSAMENTE");
+			if (eContribuyente_Alta(Contribuyente, TAM_ESTRUCTURA)) {
+				puts(" * Contribuyente DADO DE ALTA EXITOSAMENTE");
 			} else {
 				puts(" * NO SE DIO DE ALTA.");
 			}
@@ -51,38 +51,38 @@ int main(void) {
 			break;
 		case 2:
 			//BAJA
-			if (ePantalla_Baja(Pantalla, TAM_ESTRUCTURA)) {
-				puts("\n * BAJA DE Pantalla EXITOSA");
-				ePantalla_MostrarTodos(Pantalla, TAM_ESTRUCTURA);
+			if (eContribuyente_Baja(Contribuyente, TAM_ESTRUCTURA)) {
+				puts("\n * BAJA DE Contribuyente EXITOSA");
+				eContribuyente_MostrarTodos(Contribuyente, TAM_ESTRUCTURA);
 			} else {
-				puts("\n * BAJA DE Pantalla CANCELADA");
+				puts("\n * BAJA DE Contribuyente CANCELADA");
 			}
 			system("pause");
 			break;
 		case 3:
-			//IMPRIMIR Pantalla
-			if(ePantalla_MostrarTodos(Pantalla, TAM_ESTRUCTURA))
+			//IMPRIMIR Contribuyente
+			if(eContribuyente_MostrarTodos(Contribuyente, TAM_ESTRUCTURA))
 			{
 				system("pause");
 			}else{
-				puts("No hay nada para mostrar pa");
+				puts("NO EXISTE CONTRIBUYENTE CARGADO.");
 			}
 			break;
 		case 4:
 			//MODIFICACION
-			if (ePantalla_Modificacion(Pantalla, TAM_ESTRUCTURA)) {
-				puts("\n * MODIFICACION DE Pantalla EXITOSA\n");
-				ePantalla_MostrarTodos(Pantalla, TAM_ESTRUCTURA);
+			if (eContribuyente_Modificacion(Contribuyente, TAM_ESTRUCTURA)) {
+				puts("\n * MODIFICACION DE Contribuyente EXITOSA\n");
+				eContribuyente_MostrarTodos(Contribuyente, TAM_ESTRUCTURA);
 			} else {
-				puts("\n * MODIFICACION DE Pantalla CANCELADA");
+				puts("\n * MODIFICACION DE Contribuyente CANCELADA");
 			}
 			system("pause");
 			break;
 		case 5:
-			//ORDENAR Pantalla
+			//ORDENAR Contribuyente
 			criterioDeOrdenamiento = get_IntRange("INGRESE CRITERIO DE ORDENAMIENTO [1]MAYOR A MENOR [-1]MENOR A MAYOR","ERROR REINGRESE",
 					-1,1); //PEDIR CRITERIO DE ORDENAMIENTO
-			ePantalla_Sort(Pantalla, TAM_ESTRUCTURA, criterioDeOrdenamiento);
+			eContribuyente_Sort(Contribuyente, TAM_ESTRUCTURA, criterioDeOrdenamiento);
 			system("pause");
 			break;
 		}

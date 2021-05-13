@@ -7,6 +7,6 @@
 #ifndef ENTIDADES_C_
 #define ENTIDADES_C_
 
-#include "Pantalla.h"
+#include "Contribuyente.h"
 
 #endif /* ENTIDADES_C_ */

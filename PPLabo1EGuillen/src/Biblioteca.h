@@ -13,7 +13,7 @@
 #include <string.h>
 #include <ctype.h>
 
-#define TAM_BUFFER 1000
+#define TAM_BUFFER 10000
 
 //Validaciones
 int validate_OnlyNumberInt(char* pData);

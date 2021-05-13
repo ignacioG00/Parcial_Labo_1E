@@ -5,15 +5,14 @@
  *      Author: ignac
  */
 
-#ifndef ENTIDADES_H_
-#define ENTIDADES_H_
-
-#include "Pantalla.h"
+#ifndef INFORMES_H_
+#define INFORMES_H_
 
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "Contribuyente.h"
 
 
 
-#endif /* ENTIDADES_H_ */
+#endif /* INFORMES_H_ */
