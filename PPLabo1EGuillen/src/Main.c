@@ -12,19 +12,22 @@
 #include <stdlib.h>
 #include "Biblioteca.h"
 #include "Informes.h"
-#define TAM_ESTRUCTURA 5
+#define TAM_CONTRIBUYENTE 50
+#define TAM_RECAUDACIONES 50
 
 int main(void) {
 	setbuf(stdout, NULL);
 
 	int opc;
-	int criterioDeOrdenamiento;
+//	int criterioDeOrdenamiento;
+	int flagContrib = 0;
 
-	//CREO ARRAY DE ESTRUCTURA
-	eContribuyente Contribuyente[TAM_ESTRUCTURA];
-
-	//INICIALIAZO ARRAY DE ESTRUCTURA
-	eContribuyente_Inicializar(Contribuyente, TAM_ESTRUCTURA);
+	//CREO ARRAY DE CONTRIBUYENTE
+	eContribuyente Contribuyente[TAM_CONTRIBUYENTE];
+	eRecaudaciones Recaudaciones[TAM_RECAUDACIONES];
+	//INICIALIAZO ARRAY DE CONTRIBUYENTE
+	eContribuyente_Inicializar(Contribuyente, TAM_CONTRIBUYENTE);
+	eRecaudaciones_Inicializar(Recaudaciones, TAM_CONTRIBUYENTE);
 
 	//BUCLE DE MENU
 	do {
@@ -42,18 +45,19 @@ int main(void) {
 			break;
 		case 1:
 			//ALTA
-			if (eContribuyente_Alta(Contribuyente, TAM_ESTRUCTURA)) {
+			if (eContribuyente_Alta(Contribuyente, TAM_CONTRIBUYENTE)) {
 				puts(" * Contribuyente DADO DE ALTA EXITOSAMENTE");
 			} else {
 				puts(" * NO SE DIO DE ALTA.");
 			}
 			system("pause");
+			flagContrib = 1;
 			break;
 		case 2:
 			//MODIFICACION
-			if (eContribuyente_Modificacion(Contribuyente, TAM_ESTRUCTURA)) {
+			if (eContribuyente_Modificacion(Contribuyente, TAM_CONTRIBUYENTE)) {
 				puts("\n * MODIFICACION DE Contribuyente EXITOSA\n");
-				eContribuyente_MostrarTodos(Contribuyente, TAM_ESTRUCTURA);
+				eContribuyente_MostrarTodos(Contribuyente, TAM_CONTRIBUYENTE);
 			} else {
 				puts("\n * MODIFICACION DE Contribuyente CANCELADA");
 			}
@@ -61,9 +65,9 @@ int main(void) {
 			break;
 		case 3:
 			//BAJA
-			if (eContribuyente_Baja(Contribuyente, TAM_ESTRUCTURA)) {
+			if (eContribuyente_Baja(Contribuyente, TAM_CONTRIBUYENTE)) {
 				puts("\n * BAJA DE Contribuyente EXITOSA");
-				eContribuyente_MostrarTodos(Contribuyente, TAM_ESTRUCTURA);
+				eContribuyente_MostrarTodos(Contribuyente, TAM_CONTRIBUYENTE);
 			} else {
 				puts("\n * BAJA DE Contribuyente CANCELADA");
 			}
@@ -71,20 +75,29 @@ int main(void) {
 			break;
 
 		case 4:
-			//IMPRIMIR Contribuyente
-			if(eContribuyente_MostrarTodos(Contribuyente, TAM_ESTRUCTURA))
+			//ALTA RECAUDACIONES
+			if(flagContrib==1){
+			if (eRecaudacionesContribuyente_Alta(Recaudaciones, TAM_RECAUDACIONES, Contribuyente, TAM_CONTRIBUYENTE)) {
+				puts(" * RECAUDACIONES DADO DE ALTA EXITOSAMENTE");
+				eRecaudaciones_MostrarTodos(Recaudaciones,TAM_RECAUDACIONES);
+			} else {
+				puts(" * NO SE DIO DE ALTA.");
+			}
+			system("pause");
+			}else{
+				opc=1;
+				printf("*DEBE EXISTIR UN CONTRIBUYENTE*\n");
+			}
+			break;
+
+		case 7:
+			 //IMPRIMIR Contribuyente
+			if(eContribuyente_MostrarTodos(Contribuyente, TAM_CONTRIBUYENTE))
 			{
 				system("pause");
 			}else{
 				puts("NO EXISTE CONTRIBUYENTE CARGADO.");
 			}
-			break;
-		case 5:
-			//ORDENAR Contribuyente
-			criterioDeOrdenamiento = get_IntRange("INGRESE CRITERIO DE ORDENAMIENTO [1]MAYOR A MENOR [-1]MENOR A MAYOR","ERROR REINGRESE",
-					-1,1); //PEDIR CRITERIO DE ORDENAMIENTO
-			eContribuyente_Sort(Contribuyente, TAM_ESTRUCTURA, criterioDeOrdenamiento);
-			system("pause");
 			break;
 		}
 	} while (opc != 0);

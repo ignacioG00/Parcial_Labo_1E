@@ -1,21 +1,12 @@
-/*
- * Contribuyente.c
- *
- *  Created on: 12 may. 2021
- *      Author: ignac
- */
-
-#ifndef Contribuyente_C_
-#define Contribuyente_C_
-#include "Contribuyente.h"
+#include "Recaudaciones.h"
 
 #include "Biblioteca.h"
 
 /**IMPORTANTE - SETEAR VALOR INICIAL CON EL PREFERIDO PARA COMENZAR IDs*/
 //ID AUTOINCREMENTAL
-static int Contribuyente_idIncremental = 0;
+static int Recaudaciones_idIncremental = 0;
 
-void eContribuyente_Inicializar(eContribuyente array[], int TAM) {
+void eRecaudaciones_Inicializar(eRecaudaciones array[], int TAM) {
 	int i;
 	//SI EXISTE EL ARRAY Y EL LIMITE ES VALIDO
 	if (array != NULL && TAM > 0) {
@@ -27,12 +18,12 @@ void eContribuyente_Inicializar(eContribuyente array[], int TAM) {
 	}
 }
 
-int eContribuyente_ObtenerID() {
+int eRecaudaciones_ObtenerID() {
 	//INCREMENTA VARIABLE ESTATICA CADA VEZ QUE SE LLAMA ESTA FUNCION
-	return Contribuyente_idIncremental += 1;
+	return Recaudaciones_idIncremental += 1;
 }
 
-int eContribuyente_ObtenerIndexLibre(eContribuyente array[], int TAM) {
+int eRecaudaciones_ObtenerIndexLibre(eRecaudaciones array[], int TAM) {
 	int retorno = -1;
 	int i;
 
@@ -52,7 +43,7 @@ int eContribuyente_ObtenerIndexLibre(eContribuyente array[], int TAM) {
 	return retorno;
 }
 
-int eContribuyente_BuscarPorID(eContribuyente array[], int TAM, int ID) {
+int eRecaudaciones_BuscarPorID(eRecaudaciones array[], int TAM, int ID) {
 	int retorno = -1;
 	int i;
 
@@ -61,7 +52,7 @@ int eContribuyente_BuscarPorID(eContribuyente array[], int TAM, int ID) {
 		//RECORRO TODO EL ARRAY
 		for (i = 0; i < TAM; i++) {
 			//BUSCO QUE ESTE "OCUPADO" Y QUE CONCIDA EL ID QUE ESTOY BUSCANDO
-			if (array[i].idContribuyente == ID && array[i].isEmpty == OCUPADO) {
+			if (array[i].idRecaudaciones == ID && array[i].isEmpty == OCUPADO) {
 				//SI ENCONTRE EL ID
 				//DEVUELVO EL INDEX DE DONDE ESTA EL ID BUSCADO Y SALGO
 				retorno = i;
@@ -73,20 +64,21 @@ int eContribuyente_BuscarPorID(eContribuyente array[], int TAM, int ID) {
 	return retorno;
 }
 
-void eContribuyente_MostrarUno(eContribuyente Contribuyente) {
-	//PRINTF DE UN SOLO Contribuyente
-	printf("%5d %15s %15s %15d \n\n", Contribuyente.idContribuyente,Contribuyente.nombre,Contribuyente.apellido,Contribuyente.cuil);
+void eRecaudaciones_MostrarUno(eRecaudaciones Recaudaciones) {
+	//PRINTF DE UN SOLO Recaudaciones
+	printf("%15d %15d %15f %15d %15d \n\n", Recaudaciones.idRecaudaciones,Recaudaciones.mes,Recaudaciones.importe
+			,Recaudaciones.tipoRecaudacion,Recaudaciones.idContribuyente);
 }
 
-int eContribuyente_MostrarTodos(eContribuyente array[], int TAM) {
+int eRecaudaciones_MostrarTodos(eRecaudaciones array[], int TAM) {
 	int i;
 	int retorno = 0;
 	int cantidad = 0;
 
 	//CABECERA
-	puts("\n\t> LISTADO Contribuyente");
-	printf("%5s %15s %15s %15s \n\n ",
-			"ID" ,"NOMBRE","APELLIDO","CUIL"); //AGREGAR TITULOS DE COLUMNA (QUITAR DE VER QUE NO ES NECESARIO)
+	puts("\n\t> LISTADO Recaudaciones");
+	printf("%15s %15s %15s %15s %15s\n\n ",
+			"ID RECAUDACION" ,"MES","IMPORTE","TIPO RECAUDACION", "ID CONTRIBUYENTE"); //AGREGAR TITULOS DE COLUMNA (QUITAR DE VER QUE NO ES NECESARIO)
 
 	//SI EXISTE EL ARRAY Y EL LIMITE ES VALIDO
 	if (array != NULL && TAM > 0) {
@@ -94,15 +86,15 @@ int eContribuyente_MostrarTodos(eContribuyente array[], int TAM) {
 		for (i = 0; i < TAM; i++) {
 			//PREGUNTO POR SU ESTADO "OCUPADO"
 			if (array[i].isEmpty == OCUPADO) {
-				//MUESTRO UN SOLO Contribuyente
-				eContribuyente_MostrarUno(array[i]);
-				//CONTADOR DE Contribuyente
+				//MUESTRO UN SOLO Recaudaciones
+				eRecaudaciones_MostrarUno(array[i]);
+				//CONTADOR DE Recaudaciones
 				cantidad++;
 			}
 		}
 	}
 
-	//SI CANTIDAD == 0 - NO HUBO Contribuyente PARA MOSTRAR (ARRAY SIN ALTAS)
+	//SI CANTIDAD == 0 - NO HUBO Recaudaciones PARA MOSTRAR (ARRAY SIN ALTAS)
 	if (cantidad > 0) {
 		retorno = 1;
 	}
@@ -110,13 +102,13 @@ int eContribuyente_MostrarTodos(eContribuyente array[], int TAM) {
 	return retorno;
 }
 
-int eContribuyente_MostrarDadosDeBaja(eContribuyente array[], int TAM) {
+int eRecaudaciones_MostrarDadosDeBaja(eRecaudaciones array[], int TAM) {
 	int i;
 	int retorno = 0;
 	int cantidad = 0;
 
 	//CABECERA
-	puts("\t> Contribuyente\n");
+	puts("\t> Recaudaciones\n");
 	printf("%5s\n\n", "ID"); //AGREGAR TITULOS DE COLUMNA (QUITAR DE VER QUE NO ES NECESARIO)
 
 	//SI EXISTE EL ARRAY Y EL LIMITE ES VALIDO
@@ -125,15 +117,15 @@ int eContribuyente_MostrarDadosDeBaja(eContribuyente array[], int TAM) {
 		for (i = 0; i < TAM; i++) {
 			//PREGUNTO POR SU ESTADO "BAJA"
 			if (array[i].isEmpty == BAJA) {
-				//MUESTRO UN SOLO Contribuyente
-				eContribuyente_MostrarUno(array[i]);
-				//CONTADOR DE Contribuyente
+				//MUESTRO UN SOLO Recaudaciones
+				eRecaudaciones_MostrarUno(array[i]);
+				//CONTADOR DE Recaudaciones
 				cantidad++;
 			}
 		}
 	}
 
-	//SI CANTIDAD == 0 - NO HUBO Contribuyente PARA MOSTRAR (ARRAY SIN BAJAS)
+	//SI CANTIDAD == 0 - NO HUBO Recaudaciones PARA MOSTRAR (ARRAY SIN BAJAS)
 	if (cantidad > 0) {
 		retorno = 1;
 	}
@@ -141,61 +133,86 @@ int eContribuyente_MostrarDadosDeBaja(eContribuyente array[], int TAM) {
 	return retorno;
 }
 
-eContribuyente eContribuyente_CargarDatos(void) {
-	eContribuyente auxiliar;
-	/** CARGAR DATOS NECESARIOS PARA EL ALTA*/
-	get_OnlyAlphabetStringWithSpaces("INGRESE EL NOMBRE:\n-","ERROR.REINGRESE.\n",auxiliar.nombre,MAX_CHARS_CADENAS);
-	get_OnlyAlphabetStringWithSpaces("INGRESE EL APELLIDO:\n-","ERROR.REINGRESE.\n",auxiliar.apellido,MAX_CHARS_CADENAS);
-	auxiliar.cuil=get_Int("INGRESE EL CUIL:\n","ERROR.REINGRESE NUMERO.\n");
 
+eRecaudaciones eRecaudaciones_CargarDatos(void) {
+	eRecaudaciones auxiliar;
+	/** CARGAR DATOS NECESARIOS PARA EL ALTA*/
+	int opc;
+	auxiliar.mes = get_IntRange("INGRESE MES: ", "ERROR. REINGRESE MES: ", 1, 12);
+	auxiliar.importe=get_Float("INGRESE IMPORTE: ", "ERROR.REINGRESE IMPORTE:");
+	opc=get_IntRange("\t1- ARBA \n\t2 - IIBB \n\t3 - GANANCIAS","ERROR REINGRESE EL TIPO DE RECAUDACION:\n "
+			"\t1- ARBA \n\t2 - IIBB \n\t3 - GANANCIAS",1,3);
+	switch(opc){
+	case 1:
+		auxiliar.tipoRecaudacion= ARBA;
+		break;
+	case 2:
+		auxiliar.tipoRecaudacion= IIBB;
+		break;
+	case 3:
+		auxiliar.tipoRecaudacion= GANANCIAS;
+		break;
+	}
 
 	/** IMPORTANTE - NO CARGAR ID NI ESTADO - SE HACE EN EL ALTA */
 	return auxiliar;
 }
 
-eContribuyente eContribuyente_ModificarUno(eContribuyente Contribuyente) {
-	eContribuyente auxiliar = Contribuyente;
+eRecaudaciones eRecaudaciones_ModificarUno(eRecaudaciones Recaudaciones) {
+	eRecaudaciones auxiliar = Recaudaciones;
 	/** MODIFICAR DATOS NECESARIOS PARA EL "MODIFICAR" */
 	int opc;
 	printf("INGRESE QUE QUIERE MODIFICAR: \n");
 	opc=get_IntRange("\t1 - NOMBRE \n \t2 - APELLIDO \n \t3 - CUIL \n\n-","ERROR REINGRESE EL QUE QUIERE MODIFICAR:\n "
-			"\t1 - NOMBRE \n \t2 - PRECIO \n \t3 - TIPO DE Contribuyente \n \t4 - DIRECCION\n-",1,3);
+			"\t1 - NOMBRE \n \t2 - PRECIO \n \t3 - TIPO DE Recaudaciones \n \t4 - DIRECCION\n-",1,3);
 	switch(opc){
 		case 1:
-	get_OnlyAlphabetStringWithSpaces("INGRESE EL NOMBRE:\n-","ERROR.REINGRESE.\n",auxiliar.nombre,MAX_CHARS_CADENAS);
+	auxiliar.mes = get_IntRange("INGRESE MES: ", "ERROR. REINGRESE MES: ", 1, 12);
 	break;
 
 		case 2:
-	get_OnlyAlphabetStringWithSpaces("INGRESE EL APELLIDO:\n-","ERROR.REINGRESE.\n",auxiliar.apellido,MAX_CHARS_CADENAS);
+	auxiliar.importe=get_Float("INGRESE IMPORTE: ", "ERROR.REINGRESE IMPORTE:");
 	break;
 
 		case 3:
-	auxiliar.cuil=get_Int("INGRESE EL CUIL:\n","ERROR.REINGRESE NUMERO.\n");
+	opc=get_IntRange("\t1- ARBA \n\t2 - IIBB \n\t3 - GANANCIAS","ERROR REINGRESE EL TIPO DE RECAUDACION:\n "
+				"\t1- ARBA \n\t2 - IIBB \n\t3 - GANANCIAS",1,3);
+		switch(opc){
+		case 1:
+			auxiliar.tipoRecaudacion= ARBA;
+			break;
+		case 2:
+			auxiliar.tipoRecaudacion= IIBB;
+			break;
+		case 3:
+			auxiliar.tipoRecaudacion= GANANCIAS;
+			break;
+		}
 	break;
 	}
 	/** IMPORTANTE - MODIFICAR EL AUXILIAR QUE ES LA COPIA DEL ORIGINAL */
 	return auxiliar;
 }
 
-int eContribuyente_Alta(eContribuyente array[], int TAM) {
+int eRecaudaciones_Alta(eRecaudaciones array[], int TAM) {
 	int retorno = 0;
-	eContribuyente auxContribuyente;
+	eRecaudaciones auxRecaudaciones;
 
 	//BUSCO ESPACIO EN ARRAY
-	int index = eContribuyente_ObtenerIndexLibre(array, TAM);
+	int index = eRecaudaciones_ObtenerIndexLibre(array, TAM);
 
 	//SI INDEX == -1 ARRAY LLENO
 	//SI INDEX != -1 TENGO EN INDEX POSICION DE ARRAY LIBRE
 	if (index != -1) {
-		//PIDO DATOS - CARGO Contribuyente AUXILIAR
-		auxContribuyente = eContribuyente_CargarDatos();
+		//PIDO DATOS - CARGO Recaudaciones AUXILIAR
+		auxRecaudaciones = eRecaudaciones_CargarDatos();
 		if(validate_Exit_SN("DESEA CONTINUAR? SI[S] NO[N]: ","ERROR.REINGRESE")){
 		//SETEO ID UNICO - VARIABLE ESTATICA AUTOINCREMENTAL
-		auxContribuyente.idContribuyente = eContribuyente_ObtenerID() + 999;
+		auxRecaudaciones.idRecaudaciones = eRecaudaciones_ObtenerID();
 		//CAMBIO SU ESTADO A "OCUPADO"
-		auxContribuyente.isEmpty = OCUPADO;
+		auxRecaudaciones.isEmpty = OCUPADO;
 		//SETEO EL ARRAY CON AUXILIAR EN INDEX LIBRE OBTENIDO PREVIAMENTE
-		array[index] = auxContribuyente;
+		array[index] = auxRecaudaciones;
 		//RETORNO 1 PARA SABER QUE FUE DADO DE ALTA SATISFACTORIAMENTE
 		retorno = 1;
 		}
@@ -204,28 +221,28 @@ int eContribuyente_Alta(eContribuyente array[], int TAM) {
 	return retorno;
 }
 
-int eContribuyente_Baja(eContribuyente array[], int TAM) {
+int eRecaudaciones_Baja(eRecaudaciones array[], int TAM) {
 	int retorno = 0;
-	int idContribuyente;
+	int idRecaudaciones;
 	int index;
 	int flag = 0;
 	int flagSalir=1;//SI ES 1 SE QUEDA
 
-	//LISTO TODOS LOS Contribuyente
-	if (eContribuyente_MostrarTodos(array, TAM)) {
-		//BANDERA EN 1 SI HAY Contribuyente DADOS DE ALTA PARA LISTAR
+	//LISTO TODOS LOS Recaudaciones
+	if (eRecaudaciones_MostrarTodos(array, TAM)) {
+		//BANDERA EN 1 SI HAY Recaudaciones DADOS DE ALTA PARA LISTAR
 		flag = 1;
 	}
 
-	//SI HAY Contribuyente PARA DAR DE BAJA
+	//SI HAY Recaudaciones PARA DAR DE BAJA
 	if (flag) {
 		//PIDO ID A DAR DE BAJA
 		/**USAR FUNCION GET_INT DE LIBRERIA DE INPUTS*/
 		printf("INGRESE ID A DAR DE BAJA: ");
-		scanf("%d", &idContribuyente);
+		scanf("%d", &idRecaudaciones);
 
 		//BUSCO INDEX POR ID EN ARRAY
-		while (eContribuyente_BuscarPorID(array, TAM, idContribuyente) == -1) {
+		while (eRecaudaciones_BuscarPorID(array, TAM, idRecaudaciones) == -1) {
 			if(validate_Exit_SN("NO EXISTE ID. DESEA SALIR? SI[S] NO[N]: ","ERROR.REINGRESE"))
 			{
 				flagSalir=-1;//TORNO -1 PARA SALIR DIRECTAMENTE
@@ -233,11 +250,11 @@ int eContribuyente_Baja(eContribuyente array[], int TAM) {
 			}
 			/**USAR FUNCION GET_INT DE LIBRERIA DE INPUTS*/
 			printf("INGRESE ID A DAR DE BAJA: ");
-			idContribuyente= get_IntPositive("INGRESE ID A DAR DE BAJA: ", "ERROR.REINGRESE:");
+			idRecaudaciones= get_IntPositive("INGRESE ID A DAR DE BAJA: ", "ERROR.REINGRESE:");
 		}
 		if(flagSalir==1){
-		//OBTENGO INDEX DEL ARRAY DE Contribuyente A DAR DE BAJA
-		index = eContribuyente_BuscarPorID(array, TAM, idContribuyente);
+		//OBTENGO INDEX DEL ARRAY DE Recaudaciones A DAR DE BAJA
+		index = eRecaudaciones_BuscarPorID(array, TAM, idRecaudaciones);
 		if(validate_Exit_SN("DESEA CONTINUAR? SI[S] NO[N]: ","ERROR.REINGRESE"))
 			{
 		/**PREGUNTAR SI DESEA CONTINUAR*/
@@ -253,40 +270,40 @@ int eContribuyente_Baja(eContribuyente array[], int TAM) {
 	return retorno;
 }
 
-int eContribuyente_Modificacion(eContribuyente array[], int TAM) {
+int eRecaudaciones_Modificacion(eRecaudaciones array[], int TAM) {
 	int retorno = 0;
-	int idContribuyente;
+	int idRecaudaciones;
 	int index;
 	int flag = 0;
-	eContribuyente auxiliar;
+	eRecaudaciones auxiliar;
 
-	//LISTO TODOS LOS Contribuyente
-	if (eContribuyente_MostrarTodos(array, TAM)) {
-		//BANDERA EN 1 SI HAY Contribuyente DADOS DE ALTA PARA LISTAR
+	//LISTO TODOS LOS Recaudaciones
+	if (eRecaudaciones_MostrarTodos(array, TAM)) {
+		//BANDERA EN 1 SI HAY Recaudaciones DADOS DE ALTA PARA LISTAR
 		flag = 1;
 	}
 
-	//SI HAY Contribuyente PARA MODIFICAR
+	//SI HAY Recaudaciones PARA MODIFICAR
 	if (flag) {
 		//PIDO ID A MODIFICAR
 		/**USAR FUNCION GET_INT DE LIBRERIA DE INPUTS*/
 		printf("INGRESE ID A DAR DE BAJA: ");
-		scanf("%d", &idContribuyente);
+		scanf("%d", &idRecaudaciones);
 
 		//BUSCO INDEX POR ID EN ARRAY
-		while (eContribuyente_BuscarPorID(array, TAM, idContribuyente) == -1) {
+		while (eRecaudaciones_BuscarPorID(array, TAM, idRecaudaciones) == -1) {
 			puts("NO EXISTE ID.");
 
 			/**USAR FUNCION GET_INT DE LIBRERIA DE INPUTS*/
 			printf("INGRESE ID A DAR DE BAJA: ");
-			scanf("%d", &idContribuyente);
+			scanf("%d", &idRecaudaciones);
 		}
 
-		//OBTENGO INDEX DEL ARRAY DE Contribuyente A MODIFICAR
-		index = eContribuyente_BuscarPorID(array, TAM, idContribuyente);
+		//OBTENGO INDEX DEL ARRAY DE Recaudaciones A MODIFICAR
+		index = eRecaudaciones_BuscarPorID(array, TAM, idRecaudaciones);
 
-		//LLAMO A FUNCION QUE MODIFICA Contribuyente
-		auxiliar = eContribuyente_ModificarUno(array[index]);
+		//LLAMO A FUNCION QUE MODIFICA Recaudaciones
+		auxiliar = eRecaudaciones_ModificarUno(array[index]);
 
 		/**PREGUNTAR SI DESEA CONTINUAR*/
 		//MODIFICACION ACEPTADA
@@ -299,13 +316,13 @@ int eContribuyente_Modificacion(eContribuyente array[], int TAM) {
 	return retorno;
 }
 
-int eContribuyente_Sort(eContribuyente array[], int TAM, int criterio) {
+int eRecaudaciones_Sort(eRecaudaciones array[], int TAM, int criterio) {
 	int retorno = 0;
 	int i;
 	int j;
-	eContribuyente aux;
+	eRecaudaciones aux;
 
-	/** EJEMPLO DE SORT CON ID DE Contribuyente
+	/** EJEMPLO DE SORT CON ID DE Recaudaciones
 	    MODIFICAR "CRITERIO DE ORDENAMIENTO" PARA OTROS CASOS DE ORDENAMIENTO
 	    CASE -1 -> MENOR A MAYOR (ASCENDENTE)
 	    CASE  1 -> MAYOR A MENOR (DESCENDENTE)
@@ -323,7 +340,7 @@ int eContribuyente_Sort(eContribuyente array[], int TAM, int criterio) {
 					if (array[i].isEmpty == OCUPADO
 							&& array[j].isEmpty == OCUPADO) {
 						//CRITERIO DE ORDENAMIENTO
-						if (array[i].idContribuyente > array[j].idContribuyente) {
+						if (array[i].idRecaudaciones > array[j].idRecaudaciones) {
 							//INTERCAMBIO POSICIONES EN ARRAY
 							aux = array[i];
 							array[i] = array[j];
@@ -341,7 +358,7 @@ int eContribuyente_Sort(eContribuyente array[], int TAM, int criterio) {
 					if (array[i].isEmpty == OCUPADO
 							&& array[j].isEmpty == OCUPADO) {
 						//CRITERIO DE ORDENAMIENTO
-						if (array[i].idContribuyente < array[j].idContribuyente) {
+						if (array[i].idRecaudaciones < array[j].idRecaudaciones) {
 							//INTERCAMBIO POSICIONES EN ARRAY
 							aux = array[i];
 							array[i] = array[j];
@@ -361,5 +378,3 @@ int eContribuyente_Sort(eContribuyente array[], int TAM, int criterio) {
 	}
 	return retorno;
 }
-
-#endif /* Contribuyente_C_ */

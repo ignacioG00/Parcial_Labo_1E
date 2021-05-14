@@ -11,8 +11,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
 #include "Contribuyente.h"
+#include "Recaudaciones.h"
 
-
+int eRecaudacionesContribuyente_Alta(eRecaudaciones arrayRecaudaciones[], int TAM_Recaudaciones,eContribuyente arrayContribuyente[], int TAM_Contribuyente);
 
 #endif /* INFORMES_H_ */
