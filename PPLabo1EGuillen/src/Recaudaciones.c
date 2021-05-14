@@ -208,7 +208,7 @@ int eRecaudaciones_Alta(eRecaudaciones array[], int TAM) {
 		auxRecaudaciones = eRecaudaciones_CargarDatos();
 		if(validate_Exit_SN("DESEA CONTINUAR? SI[S] NO[N]: ","ERROR.REINGRESE")){
 		//SETEO ID UNICO - VARIABLE ESTATICA AUTOINCREMENTAL
-		auxRecaudaciones.idRecaudaciones = eRecaudaciones_ObtenerID();
+		auxRecaudaciones.idRecaudaciones = eRecaudaciones_ObtenerID() ;
 		//CAMBIO SU ESTADO A "OCUPADO"
 		auxRecaudaciones.isEmpty = OCUPADO;
 		//SETEO EL ARRAY CON AUXILIAR EN INDEX LIBRE OBTENIDO PREVIAMENTE
@@ -221,54 +221,7 @@ int eRecaudaciones_Alta(eRecaudaciones array[], int TAM) {
 	return retorno;
 }
 
-int eRecaudaciones_Baja(eRecaudaciones array[], int TAM) {
-	int retorno = 0;
-	int idRecaudaciones;
-	int index;
-	int flag = 0;
-	int flagSalir=1;//SI ES 1 SE QUEDA
 
-	//LISTO TODOS LOS Recaudaciones
-	if (eRecaudaciones_MostrarTodos(array, TAM)) {
-		//BANDERA EN 1 SI HAY Recaudaciones DADOS DE ALTA PARA LISTAR
-		flag = 1;
-	}
-
-	//SI HAY Recaudaciones PARA DAR DE BAJA
-	if (flag) {
-		//PIDO ID A DAR DE BAJA
-		/**USAR FUNCION GET_INT DE LIBRERIA DE INPUTS*/
-		printf("INGRESE ID A DAR DE BAJA: ");
-		scanf("%d", &idRecaudaciones);
-
-		//BUSCO INDEX POR ID EN ARRAY
-		while (eRecaudaciones_BuscarPorID(array, TAM, idRecaudaciones) == -1) {
-			if(validate_Exit_SN("NO EXISTE ID. DESEA SALIR? SI[S] NO[N]: ","ERROR.REINGRESE"))
-			{
-				flagSalir=-1;//TORNO -1 PARA SALIR DIRECTAMENTE
-				break;
-			}
-			/**USAR FUNCION GET_INT DE LIBRERIA DE INPUTS*/
-			printf("INGRESE ID A DAR DE BAJA: ");
-			idRecaudaciones= get_IntPositive("INGRESE ID A DAR DE BAJA: ", "ERROR.REINGRESE:");
-		}
-		if(flagSalir==1){
-		//OBTENGO INDEX DEL ARRAY DE Recaudaciones A DAR DE BAJA
-		index = eRecaudaciones_BuscarPorID(array, TAM, idRecaudaciones);
-		if(validate_Exit_SN("DESEA CONTINUAR? SI[S] NO[N]: ","ERROR.REINGRESE"))
-			{
-		/**PREGUNTAR SI DESEA CONTINUAR*/
-		//BAJA ACEPTADA - CAMBIO ESTADO A "BAJA"
-		array[index].isEmpty = BAJA;
-
-		//RETORNO 1 SI SE DIO DE BAJA CORRECTAMENTE
-		retorno = 1;
-			}
-		}
-	}
-
-	return retorno;
-}
 
 int eRecaudaciones_Modificacion(eRecaudaciones array[], int TAM) {
 	int retorno = 0;

@@ -65,20 +65,26 @@ int main(void) {
 			break;
 		case 3:
 			//BAJA
-			if (eContribuyente_Baja(Contribuyente, TAM_CONTRIBUYENTE)) {
+			if(flagContrib==1){
+			if (bajaDeContribuyente(Recaudaciones, TAM_RECAUDACIONES, Contribuyente, TAM_CONTRIBUYENTE)) {
 				puts("\n * BAJA DE Contribuyente EXITOSA");
+
 				eContribuyente_MostrarTodos(Contribuyente, TAM_CONTRIBUYENTE);
 			} else {
 				puts("\n * BAJA DE Contribuyente CANCELADA");
 			}
 			system("pause");
+			}else{
+				opc=1;
+				printf("*DEBE EXISTIR UN CONTRIBUYENTE*\n");
+			}
 			break;
 
 		case 4:
 			//ALTA RECAUDACIONES
 			if(flagContrib==1){
 			if (eRecaudacionesContribuyente_Alta(Recaudaciones, TAM_RECAUDACIONES, Contribuyente, TAM_CONTRIBUYENTE)) {
-				puts(" * RECAUDACIONES DADO DE ALTA EXITOSAMENTE");
+				puts(" * RECAUDACION DADA DE ALTA EXITOSAMENTE");
 				eRecaudaciones_MostrarTodos(Recaudaciones,TAM_RECAUDACIONES);
 			} else {
 				puts(" * NO SE DIO DE ALTA.");
@@ -92,11 +98,13 @@ int main(void) {
 
 		case 7:
 			 //IMPRIMIR Contribuyente
+			if(flagContrib==1){
 			if(eContribuyente_MostrarTodos(Contribuyente, TAM_CONTRIBUYENTE))
 			{
 				system("pause");
 			}else{
 				puts("NO EXISTE CONTRIBUYENTE CARGADO.");
+				}
 			}
 			break;
 		}

@@ -461,7 +461,7 @@ void menu(void)
 	puts("2 - MODIFICAR CONTRIBUYENTE");
 	puts("3 - BAJA DE CONTRIBUYENTE");
 	puts("4 - RECAUDACION");
-
+	puts("7 - IMPRIMIR CONTRIBUYENTE");
 }
 
 

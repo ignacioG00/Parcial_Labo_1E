@@ -46,4 +46,33 @@ int eRecaudacionesContribuyente_Alta(eRecaudaciones arrayRecaudaciones[], int TA
 	return rtn;
 }
 
+/*3) Baja de contribuyente: Se ingresa el ID del contribuyente y se listarán todas las
+recaudaciones de dicho contribuyente. Luego se preguntará si se quiere confirmar la
+eliminación, la cual implicará la eliminación de todos las recaudaciones y del contribuyente.*/
+
+int bajaDeContribuyente(eRecaudaciones arrayRecaudaciones[], int TAM_Recaudaciones,eContribuyente arrayContribuyente[], int TAM_Contribuyente)
+{
+	int rtn =0;
+	int idContribuyente;
+
+	eContribuyente_MostrarTodos(arrayContribuyente, TAM_Contribuyente);
+	idContribuyente = get_Int("SELECCIONE ID DE CONTRIBUYENTE PARA VER RECAUDACIONES: ",
+			"ERROR. REINGRESE: ");
+
+	while (eContribuyente_BuscarPorID(arrayContribuyente, TAM_Contribuyente, idContribuyente) == -1) {
+		puts("ID NO EXISTE.");
+	idContribuyente = get_Int("SELECCIONE ID DE CONTRIBUYENTE PARA VER RECAUDACIONES: ",
+				"ERROR. REINGRESE: ");
+	}
+
+	if (validate_Exit_SN("DESEA DAR DE BAJA ESTE CONTRIBUYENTE? SI[S] - NO[N]: ",
+					"ERROR. REINGRESE: "))
+	{
+		eContribuyente_Baja(arrayContribuyente, TAM_Contribuyente);
+		rtn=1;
+	}
+	return rtn;
+}
+
+
 #endif /* ENTIDADES_C_ */
