@@ -16,22 +16,22 @@
 #define TAM_BUFFER 10000
 
 //Validaciones
+
+int esCUIT(char* cadena);
 int validate_OnlyNumberInt(char* pData);
-int validate_OnlyNumberFloat(char *pData);
 int validate_OnlyAlphabet(char *pData);
 int validate_OnlyAlphabetWithSpaces(char *pData);
 int validate_Exit_SN(char *msj,char *msjError);
 
 //GET
 
-float get_Float(char *msj, char *msjError);
-float get_FloatRange(char *msj,char *msjError,float minimo, float maximo,int reintentos);
+int myGets(char* cadena, int longitud);
+int get_Cuil(char* pResultado, char* mensaje, char* mensajeError, int reintentos);
+float get_FloatRange(float* pResult,char *msj,char *msjError,float minimo, float maximo,int reintentos);
 int get_Int(char *msj, char *msjError);
 int get_IntRange(char *msj,char *msjError,int minimo, int maximo);
 void get_String(char *msj, char *msjError, char *pString, int TAM);
 char get_Char(char *msj, char *msjError);
-double get_Double(char *msj,char *msjError);
-double get_DoubleRange(char *msj,char *msjError, double minimo, double maximo);
 int get_IntNegative(char *msj, char *errorMsj);
 int get_IntPositive(char *msj, char *errorMsj);
 void get_OnlyAlphabetString(char *msj,char *msjError,char *pString,int TAM);

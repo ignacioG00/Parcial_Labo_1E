@@ -5,6 +5,49 @@
 
 //VALIDACIONES
 
+int esCUIT(char* cadena)
+{
+    int retorno=1;
+    int i;
+    char buffer[14];
+    int contadorDigito;
+    int contadorGuion;
+    strncpy(buffer,cadena,14);
+
+    for(i=0;buffer[i]!='\0';i++)
+    {
+        if((buffer[i]<'0' || buffer[i]>'9') && (buffer[i]!='-'))
+        {
+            retorno=0;
+            break;
+        }
+        else
+        {
+        	if(isdigit(cadena[i])!=0)
+			{
+				contadorDigito++;
+			}
+			else
+        	{
+				if(cadena[i]=='-')
+				{
+					contadorGuion++;
+        		}
+        		else
+        		{
+					retorno=0;
+					break;
+        		}
+        	}
+        }
+    }
+	if(contadorDigito==11 && contadorGuion==2 && buffer[2]=='-' && buffer[11]=='-')
+	{
+		retorno=1;
+	}
+    return retorno;
+}
+
 int validate_OnlyNumberInt(char* pData)
 {
 	int retorno=1;
@@ -30,40 +73,6 @@ int validate_OnlyNumberInt(char* pData)
 	}else{
 		retorno=0;
 	}
-	return retorno;
-}
-
-int validate_OnlyNumberFloat(char *pData)
-{
-	int countSigno = 0;
-	int retorno = 1;
-
-	if (strlen(pData) > 0) {
-		for (int i = 0; i < strlen(pData); i++) {
-
-			if (pData[i] == '.' || pData[i] == ',') {
-				countSigno++;
-			} else {
-				if (isdigit(pData[i]) == 0) {
-					if (i == 0) {
-						if (pData[0] != '-') {
-							retorno = 0;
-							break;
-						}
-					} else {
-						retorno = 0;
-						break;
-					}
-				}
-			}
-		}
-		if (countSigno > 1) {
-			retorno = 0;
-		}
-	}else {
-		retorno = 0;
-	}
-
 	return retorno;
 }
 
@@ -114,7 +123,7 @@ int validate_Exit_SN(char *msj,char *msjError)
 
 	while(c!='S' && c!='N')
 	{
-		puts("error.Opcion no valida");
+		puts("> ERROR.OPCION NO VALIDA\n");
 		c=get_Char(msj,msjError);
 		c=toupper(c);
 	}
@@ -126,6 +135,57 @@ int validate_Exit_SN(char *msj,char *msjError)
 }
 
 //GETS
+
+int myGets(char* cadena, int longitud)
+{
+	int retorno=-1;
+	char bufferString[5000];
+	if(cadena!=NULL && longitud>0)
+	{
+		fflush(stdin);
+		if(fgets(bufferString, sizeof(bufferString),stdin)!=NULL)
+		{
+			if(bufferString[strnlen(bufferString, sizeof(bufferString))-1] =='\n')
+			{
+				bufferString[strnlen(bufferString,sizeof(bufferString))-1] = '\0';
+			}
+			if(strnlen(bufferString, sizeof(bufferString))<=longitud)
+			{
+				strncpy(cadena, bufferString, longitud);
+				retorno=0;
+			}
+		}
+	}
+	return retorno;
+}
+
+int get_Cuil(char* pResultado, char* mensaje, char* mensajeError, int reintentos)
+{
+    int maxTamanio=14; //con guiones 13 elementos
+    int minTamanio=11;  // sin puntos
+    int retorno=-1;
+    char bufferStr[maxTamanio];
+    if(mensaje!=NULL && mensajeError!=NULL && maxTamanio>minTamanio && reintentos>=0 && pResultado!=NULL)
+    {
+        do
+        {
+        	printf("%s",mensaje);
+            if((myGets(bufferStr, 14)==0) && (esCUIT(bufferStr)==1))
+			{
+                strncpy(pResultado,bufferStr,maxTamanio);
+                retorno=0;
+                break;
+            }
+            else
+            {
+                printf("%s",mensajeError);
+                reintentos--;
+            }
+        }
+        while(reintentos>=0);
+    }
+    return retorno;
+}
 
 int get_Int(char *msj, char *msjError)
 {
@@ -180,33 +240,32 @@ int get_IntNegative(char *msj, char *errorMsj)
 	return retorno;
 }
 
-float get_Float(char *msj, char *msjError)
-{
-	char buffer[TAM_BUFFER];
-	float retorno;
-	printf("%s", msj);
-	fflush(stdin);
-	gets(buffer);
 
-	while(validate_OnlyNumberFloat(buffer)==0)
-	{
-		printf("%s", msjError);
-		fflush(stdin);
-		gets(buffer);
-	}
-	retorno=atoi(buffer);
-	return retorno;
-}
-
-float get_FloatRange(char *msj,char *msjError,float minimo, float maximo,int reintentos)
+float get_FloatRange(float* pResult,char *msj,char *msjError,float minimo, float maximo,int reintentos)
 {
-	float retorno = get_Float(msj, msjError);
-	while(retorno<minimo || retorno>maximo)
-	{
-		printf("Error.Fuera de rango -> [Minimo]= %.2f [Maximo]= %.2f. /n", minimo,maximo);
-		retorno= get_Float(msj,msjError);
-	}
-	return retorno;
+	int retorno = -1;
+		float bufferInterno;
+		if(pResult != NULL && msj != NULL && msjError != NULL && minimo <= maximo && reintentos>0)
+		{
+
+			do
+			{
+				printf("%s", msj);
+				scanf("%f", &bufferInterno);
+				if(bufferInterno>=minimo && bufferInterno<=maximo)
+				{
+					*pResult=bufferInterno;
+					retorno=0;
+					break;
+				}
+				else
+				{
+					printf("%s", msjError);
+					reintentos--;
+				}
+			}while(reintentos>=0);
+		}
+		return retorno;
 }
 
 void get_String(char *msj, char *msjError, char *pString, int TAM)
@@ -269,35 +328,6 @@ void get_OnlyAlphabetStringWithSpaces(char *msj,char *msjError,char *pString, in
 	strcpy(pString,buffer);
 }
 
-double get_Double(char *msj,char *msjError)
-{
-	char buffer[TAM_BUFFER];
-	double retorno;
-
-		printf("%s",msj);
-		fflush(stdin);
-		gets(buffer);
-
-		while(validate_OnlyNumberFloat(buffer)==0)
-		{
-			printf("%s", msjError);
-			fflush(stdin);
-			gets(buffer);
-		}
-		retorno = atof(buffer);
-		return retorno;
-}
-
-double get_DoubleRange(char *msj,char *msjError, double minimo, double maximo)
-{
-	double retorno=get_Float(msj,msjError);
-	while(retorno<minimo || retorno>maximo)
-	{
-		printf("Error.Fuera de rango [Minimo]= %.2f [Maximo]= %.2f. /n", minimo,maximo);
-		retorno= get_Float(msj,msjError);
-	}
-	return retorno;
-}
 
 char get_Char(char *msj, char *msjError)
 {
@@ -460,7 +490,9 @@ void menu(void)
 	puts("1 - ALTA CONTRIBUYENTE");
 	puts("2 - MODIFICAR CONTRIBUYENTE");
 	puts("3 - BAJA DE CONTRIBUYENTE");
-	puts("4 - RECAUDACION");
+	puts("4 - ALTA RECAUDACIONES");
+	puts("5 - CAMBIAR ESTADO A REFINANCIAR");
+	puts("6 - CAMBIAR ESTADO A SALDADO");
 	puts("7 - IMPRIMIR CONTRIBUYENTE");
 }
 

@@ -24,7 +24,7 @@ int eRecaudacionesContribuyente_Alta(eRecaudaciones arrayRecaudaciones[], int TA
 
 		//ID DE Contribuyente
 		eContribuyente_MostrarTodos(arrayContribuyente, TAM_Contribuyente);
-		idContribuyente = get_Int("SELECCIONE ID DE CONTRIBUYENTE PARA VER RECAUDACIONES: ",
+		idContribuyente = get_Int("SELECCIONE ID DE CONTRIBUYENTE A QUIEN PONER LA RECAUDACION:\n ",
 				"ERROR. REINGRESE: ");
 
 		while (eContribuyente_BuscarPorID(arrayContribuyente, TAM_Contribuyente, idContribuyente) == -1) {
@@ -35,7 +35,7 @@ int eRecaudacionesContribuyente_Alta(eRecaudaciones arrayRecaudaciones[], int TA
 		auxRecaudaciones.idContribuyente = idContribuyente;
 
 		//TENGO TODO CARGADO
-		if (validate_Exit_SN("CONTINUAR SI[S] - NO[N]: ",
+		if (validate_Exit_SN("\n CONTINUAR SI[S] - NO[N]: ",
 				"ERROR. REINGRESE: ")) {
 			auxRecaudaciones.idRecaudaciones = eRecaudaciones_ObtenerID()+99;
 			auxRecaudaciones.isEmpty = OCUPADO;
@@ -64,15 +64,128 @@ int bajaDeContribuyente(eRecaudaciones arrayRecaudaciones[], int TAM_Recaudacion
 	idContribuyente = get_Int("SELECCIONE ID DE CONTRIBUYENTE PARA VER RECAUDACIONES: ",
 				"ERROR. REINGRESE: ");
 	}
+	puts("\t ***RECAUDACIONES***");
+
+	for(int i=0;i<TAM_Recaudaciones;i++)
+	{
+		if(arrayRecaudaciones[i].idContribuyente==idContribuyente)
+		{
+			eRecaudaciones_MostrarUno(arrayRecaudaciones[i]);
+		}
+	}
 
 	if (validate_Exit_SN("DESEA DAR DE BAJA ESTE CONTRIBUYENTE? SI[S] - NO[N]: ",
 					"ERROR. REINGRESE: "))
 	{
+		for(int i=0;i<TAM_Recaudaciones;i++)
+			{
+				if(arrayRecaudaciones[i].idContribuyente==idContribuyente)
+				{
+					arrayRecaudaciones[i].isEmpty=BAJA;
+				}
+			}
 		eContribuyente_Baja(arrayContribuyente, TAM_Contribuyente);
 		rtn=1;
 	}
 	return rtn;
 }
 
+/*
+5) Refinanciar Recaudación: Se pedirá el ID de la recaudación y se imprimirá la información
+del contribuyente al que pertenece, luego se pedirá confirmación para cambiarse de estado y
+se cambiará al estado "refinanciar".*/
 
+int refinanciar_Recaudacion(eRecaudaciones arrayRecaudaciones[],eContribuyente arrayContribuyente[]
+							,int TAM_Contribuyente,int TAM_Recaudaciones)
+{
+	int rtn = 0;
+	puts("\t *** RECAUDACIONES ***");
+	puts("\t *** CAMBIO DE ESTADO A 'REFINANCIACION' ***");
+	int auxID = get_Int("SELECCIONE ID DE RECAUDACION PARA DAR CON EL CONTRIBUYENTE: \n",
+			"ERROR. REINGRESE: \n");
+	int aux;
+	int indexC;
+	int indexR;
+
+	while(eRecaudaciones_BuscarPorID(arrayRecaudaciones,TAM_Recaudaciones,auxID)==-1)
+	{
+		auxID = get_Int("SELECCIONE ID DE RECAUDACION PARA DAR CON EL CONTRIBUYENTE: \n",
+					"ERROR. REINGRESE: \n");
+	}
+
+	indexR= eRecaudaciones_BuscarPorID(arrayRecaudaciones,TAM_Recaudaciones,auxID);
+
+	aux= arrayRecaudaciones[indexR].idContribuyente;
+
+	indexC= eContribuyente_BuscarPorID(arrayContribuyente,TAM_Recaudaciones,aux);
+
+	eContribuyente_MostrarUno(arrayContribuyente[indexC]);
+
+	if (validate_Exit_SN("DESEA CAMBIAR EL ESTADO A 'REFINANCIAR'? SI[S] - NO[N]: ",
+						"ERROR. REINGRESE: "))
+		{
+			strcpy(arrayRecaudaciones[indexR].estado,"REFINANCIAR");
+			rtn = 1;
+		}
+	return rtn;
+}
+
+int saldar_Recaudacion(eRecaudaciones arrayRecaudaciones[],eContribuyente arrayContribuyente[]
+							,int TAM_Contribuyente,int TAM_Recaudaciones)
+{
+	int rtn = 0;
+	puts("\t *** RECAUDACIONES ***");
+	puts("\t *** CAMBIO DE ESTADO A 'SALDADO' ***");
+	int auxID = get_Int("SELECCIONE ID DE RECAUDACION PARA DAR CON EL CONTRIBUYENTE: \n",
+			"ERROR. REINGRESE: \n");
+	int indexC;
+	int indexR;
+	int aux;
+
+	while(eRecaudaciones_BuscarPorID(arrayRecaudaciones,TAM_Recaudaciones,auxID)==-1)
+		{
+			auxID = get_Int("SELECCIONE ID DE RECAUDACION PARA DAR CON EL CONTRIBUYENTE: \n",
+						"ERROR. REINGRESE: \n");
+		}
+
+	indexR= eRecaudaciones_BuscarPorID(arrayRecaudaciones,TAM_Recaudaciones,auxID);
+
+	aux= arrayRecaudaciones[indexR].idContribuyente;
+
+	indexC= eContribuyente_BuscarPorID(arrayContribuyente,TAM_Recaudaciones,aux);
+
+	eContribuyente_MostrarUno(arrayContribuyente[indexC]);
+
+	if (validate_Exit_SN("DESEA CAMBIAR EL ESTADO A 'SALDADO'? SI[S] - NO[N]: ",
+						"ERROR. REINGRESE: "))
+		{
+			strcpy(arrayRecaudaciones[indexR].estado,"SALDADO");
+			rtn = 1;
+		}
+	return rtn;
+}
+
+int imprimir_Contribuyentes(eRecaudaciones arrayRecaudaciones[], int TAM_Recaudaciones
+		,eContribuyente arrayContribuyente[], int TAM_Contribuyente)
+{
+	int retorno=-1;
+	if(arrayRecaudaciones!=NULL && arrayContribuyente!=NULL && TAM_Recaudaciones>0 && TAM_Contribuyente>0)
+	{
+		for(int i=0; i<TAM_Contribuyente; i++)
+		{
+			if(arrayContribuyente[i].isEmpty)
+			{
+				eContribuyente_MostrarUno(arrayContribuyente[i]);
+				for(int b=0;i<TAM_Recaudaciones;i++)
+				{
+					if(arrayRecaudaciones[b].idContribuyente==arrayContribuyente[i].idContribuyente)
+					{
+						eRecaudaciones_MostrarUno(arrayRecaudaciones[b]);
+					}
+				}
+			}
+		}
+	}
+	return retorno;
+}
 #endif /* ENTIDADES_C_ */

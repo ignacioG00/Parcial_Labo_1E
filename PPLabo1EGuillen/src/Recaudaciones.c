@@ -66,8 +66,8 @@ int eRecaudaciones_BuscarPorID(eRecaudaciones array[], int TAM, int ID) {
 
 void eRecaudaciones_MostrarUno(eRecaudaciones Recaudaciones) {
 	//PRINTF DE UN SOLO Recaudaciones
-	printf("%15d %15d %15f %15d %15d \n\n", Recaudaciones.idRecaudaciones,Recaudaciones.mes,Recaudaciones.importe
-			,Recaudaciones.tipoRecaudacion,Recaudaciones.idContribuyente);
+	printf("%5d %15d %15f %10s %20d %20s \n\n", Recaudaciones.idRecaudaciones,Recaudaciones.mes,Recaudaciones.importe
+			,Recaudaciones.tipoRecaudacion,Recaudaciones.idContribuyente,Recaudaciones.estado);
 }
 
 int eRecaudaciones_MostrarTodos(eRecaudaciones array[], int TAM) {
@@ -76,9 +76,9 @@ int eRecaudaciones_MostrarTodos(eRecaudaciones array[], int TAM) {
 	int cantidad = 0;
 
 	//CABECERA
-	puts("\n\t> LISTADO Recaudaciones");
-	printf("%15s %15s %15s %15s %15s\n\n ",
-			"ID RECAUDACION" ,"MES","IMPORTE","TIPO RECAUDACION", "ID CONTRIBUYENTE"); //AGREGAR TITULOS DE COLUMNA (QUITAR DE VER QUE NO ES NECESARIO)
+	puts("\n\t>*** LISTADO RECAUDACIONES ***");
+	printf("| %5s | %5s | %10s | %15s | %15s | %10s |\n\n ",
+			"ID RECAUDACION" ,"MES","IMPORTE","TIPO RECAUDACION", "ID CONTRIBUYENTE", "ESTADO"); //AGREGAR TITULOS DE COLUMNA (QUITAR DE VER QUE NO ES NECESARIO)
 
 	//SI EXISTE EL ARRAY Y EL LIMITE ES VALIDO
 	if (array != NULL && TAM > 0) {
@@ -102,13 +102,61 @@ int eRecaudaciones_MostrarTodos(eRecaudaciones array[], int TAM) {
 	return retorno;
 }
 
+int eRecaudaciones_Baja(eRecaudaciones array[], int TAM) {
+	int retorno = 0;
+	int idRecaudaciones;
+	int index;
+	int flag = 0;
+	int flagSalir=1;//SI ES 1 SE QUEDA
+
+	//LISTO TODOS LOS Recaudaciones
+	if (eRecaudaciones_MostrarTodos(array, TAM)) {
+		//BANDERA EN 1 SI HAY Recaudaciones DADOS DE ALTA PARA LISTAR
+		flag = 1;
+	}
+
+	//SI HAY Recaudaciones PARA DAR DE BAJA
+	if (flag) {
+		//PIDO ID A DAR DE BAJA
+		/**USAR FUNCION GET_INT DE LIBRERIA DE INPUTS*/
+		printf("INGRESE ID A DAR DE BAJA: ");
+		scanf("%d", &idRecaudaciones);
+
+		//BUSCO INDEX POR ID EN ARRAY
+		while (eRecaudaciones_BuscarPorID(array, TAM, idRecaudaciones) == -1) {
+			if(validate_Exit_SN("NO EXISTE ID. DESEA SALIR? SI[S] NO[N]: ","ERROR.REINGRESE"))
+			{
+				flagSalir=-1;//TORNO -1 PARA SALIR DIRECTAMENTE
+				break;
+			}
+			printf("INGRESE ID A DAR DE BAJA: ");
+			idRecaudaciones= get_IntPositive("INGRESE ID A DAR DE BAJA: ", "ERROR.REINGRESE:");
+		}
+		if(flagSalir==1){
+		//OBTENGO INDEX DEL ARRAY DE Recaudaciones A DAR DE BAJA
+		index = eRecaudaciones_BuscarPorID(array, TAM, idRecaudaciones);
+		if(validate_Exit_SN("DESEA CONTINUAR? SI[S] NO[N]: ","ERROR.REINGRESE"))
+			{
+		/**PREGUNTAR SI DESEA CONTINUAR*/
+		//BAJA ACEPTADA - CAMBIO ESTADO A "BAJA"
+		array[index].isEmpty = BAJA;
+
+		//RETORNO 1 SI SE DIO DE BAJA CORRECTAMENTE
+		retorno = 1;
+			}
+		}
+	}
+
+	return retorno;
+}
+
 int eRecaudaciones_MostrarDadosDeBaja(eRecaudaciones array[], int TAM) {
 	int i;
 	int retorno = 0;
 	int cantidad = 0;
 
 	//CABECERA
-	puts("\t> Recaudaciones\n");
+	puts("\t> ***RECAUDACIONES***\n");
 	printf("%5s\n\n", "ID"); //AGREGAR TITULOS DE COLUMNA (QUITAR DE VER QUE NO ES NECESARIO)
 
 	//SI EXISTE EL ARRAY Y EL LIMITE ES VALIDO
@@ -139,21 +187,21 @@ eRecaudaciones eRecaudaciones_CargarDatos(void) {
 	/** CARGAR DATOS NECESARIOS PARA EL ALTA*/
 	int opc;
 	auxiliar.mes = get_IntRange("INGRESE MES: ", "ERROR. REINGRESE MES: ", 1, 12);
-	auxiliar.importe=get_Float("INGRESE IMPORTE: ", "ERROR.REINGRESE IMPORTE:");
+	get_FloatRange(&auxiliar.importe,"INGRESE IMPORTE: ", "ERROR.REINGRESE IMPORTE:",0,250000,2);
 	opc=get_IntRange("\t1- ARBA \n\t2 - IIBB \n\t3 - GANANCIAS","ERROR REINGRESE EL TIPO DE RECAUDACION:\n "
 			"\t1- ARBA \n\t2 - IIBB \n\t3 - GANANCIAS",1,3);
 	switch(opc){
 	case 1:
-		auxiliar.tipoRecaudacion= ARBA;
+		strcpy(auxiliar.tipoRecaudacion, "ARBA");
 		break;
 	case 2:
-		auxiliar.tipoRecaudacion= IIBB;
+		strcpy(auxiliar.tipoRecaudacion, "IIBB");
 		break;
 	case 3:
-		auxiliar.tipoRecaudacion= GANANCIAS;
+		strcpy(auxiliar.tipoRecaudacion, "GANANCIAS");
 		break;
 	}
-
+	strcpy(auxiliar.estado,"PENDIENTE");
 	/** IMPORTANTE - NO CARGAR ID NI ESTADO - SE HACE EN EL ALTA */
 	return auxiliar;
 }
@@ -164,14 +212,14 @@ eRecaudaciones eRecaudaciones_ModificarUno(eRecaudaciones Recaudaciones) {
 	int opc;
 	printf("INGRESE QUE QUIERE MODIFICAR: \n");
 	opc=get_IntRange("\t1 - NOMBRE \n \t2 - APELLIDO \n \t3 - CUIL \n\n-","ERROR REINGRESE EL QUE QUIERE MODIFICAR:\n "
-			"\t1 - NOMBRE \n \t2 - PRECIO \n \t3 - TIPO DE Recaudaciones \n \t4 - DIRECCION\n-",1,3);
+			"\t1 - NOMBRE \n \t2 - PRECIO \n \t3 - TIPO DE RECAUDACIONES \n-",1,3);
 	switch(opc){
 		case 1:
 	auxiliar.mes = get_IntRange("INGRESE MES: ", "ERROR. REINGRESE MES: ", 1, 12);
 	break;
 
 		case 2:
-	auxiliar.importe=get_Float("INGRESE IMPORTE: ", "ERROR.REINGRESE IMPORTE:");
+	get_FloatRange(&auxiliar.importe,"INGRESE IMPORTE: ", "ERROR.REINGRESE IMPORTE:",0,250000,2);
 	break;
 
 		case 3:
@@ -179,13 +227,13 @@ eRecaudaciones eRecaudaciones_ModificarUno(eRecaudaciones Recaudaciones) {
 				"\t1- ARBA \n\t2 - IIBB \n\t3 - GANANCIAS",1,3);
 		switch(opc){
 		case 1:
-			auxiliar.tipoRecaudacion= ARBA;
+			strcpy(auxiliar.tipoRecaudacion, "ARBA");
 			break;
 		case 2:
-			auxiliar.tipoRecaudacion= IIBB;
+			strcpy(auxiliar.tipoRecaudacion, "IIBB");
 			break;
 		case 3:
-			auxiliar.tipoRecaudacion= GANANCIAS;
+			strcpy(auxiliar.tipoRecaudacion, "GANANCIAS");
 			break;
 		}
 	break;

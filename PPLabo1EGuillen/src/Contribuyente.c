@@ -75,7 +75,10 @@ int eContribuyente_BuscarPorID(eContribuyente array[], int TAM, int ID) {
 
 void eContribuyente_MostrarUno(eContribuyente Contribuyente) {
 	//PRINTF DE UN SOLO Contribuyente
-	printf("%5d %15s %15s %15d \n\n", Contribuyente.idContribuyente,Contribuyente.nombre,Contribuyente.apellido,Contribuyente.cuil);
+	puts("\n\t> LISTADO Contribuyente");
+	printf("%5s %15s %15s %15s \n\n ",
+			"ID" ,"NOMBRE","APELLIDO","CUIL");
+	printf("%5d %15s %15s %20s \n\n", Contribuyente.idContribuyente,Contribuyente.nombre,Contribuyente.apellido,Contribuyente.cuil);
 }
 
 int eContribuyente_MostrarTodos(eContribuyente array[], int TAM) {
@@ -146,8 +149,7 @@ eContribuyente eContribuyente_CargarDatos(void) {
 	/** CARGAR DATOS NECESARIOS PARA EL ALTA*/
 	get_OnlyAlphabetStringWithSpaces("INGRESE EL NOMBRE:\n-","ERROR.REINGRESE.\n",auxiliar.nombre,MAX_CHARS_CADENAS);
 	get_OnlyAlphabetStringWithSpaces("INGRESE EL APELLIDO:\n-","ERROR.REINGRESE.\n",auxiliar.apellido,MAX_CHARS_CADENAS);
-	auxiliar.cuil=get_Int("INGRESE EL CUIL:\n","ERROR.REINGRESE NUMERO.\n");
-
+	get_Cuil(auxiliar.cuil,"INGRESE EL CUIL:\n","ERROR.REINGRESE NUMERO.\n",2);
 
 	/** IMPORTANTE - NO CARGAR ID NI ESTADO - SE HACE EN EL ALTA */
 	return auxiliar;
@@ -170,7 +172,7 @@ eContribuyente eContribuyente_ModificarUno(eContribuyente Contribuyente) {
 	break;
 
 		case 3:
-	auxiliar.cuil=get_Int("INGRESE EL CUIL:\n","ERROR.REINGRESE NUMERO.\n");
+	get_Cuil(auxiliar.cuil,"INGRESE EL CUIL:\n","ERROR.REINGRESE NUMERO.\n",2);
 	break;
 	}
 	/** IMPORTANTE - MODIFICAR EL AUXILIAR QUE ES LA COPIA DEL ORIGINAL */
@@ -221,7 +223,7 @@ int eContribuyente_Baja(eContribuyente array[], int TAM) {
 	if (flag) {
 		//PIDO ID A DAR DE BAJA
 		/**USAR FUNCION GET_INT DE LIBRERIA DE INPUTS*/
-		printf("INGRESE ID A DAR DE BAJA: ");
+		printf("REINGRESE ID A DAR DE BAJA: ");
 		scanf("%d", &idContribuyente);
 
 		//BUSCO INDEX POR ID EN ARRAY
@@ -238,15 +240,13 @@ int eContribuyente_Baja(eContribuyente array[], int TAM) {
 		if(flagSalir==1){
 		//OBTENGO INDEX DEL ARRAY DE Contribuyente A DAR DE BAJA
 		index = eContribuyente_BuscarPorID(array, TAM, idContribuyente);
-		if(validate_Exit_SN("DESEA CONTINUAR? SI[S] NO[N]: ","ERROR.REINGRESE"))
-			{
 		/**PREGUNTAR SI DESEA CONTINUAR*/
 		//BAJA ACEPTADA - CAMBIO ESTADO A "BAJA"
 		array[index].isEmpty = BAJA;
 
 		//RETORNO 1 SI SE DIO DE BAJA CORRECTAMENTE
 		retorno = 1;
-			}
+
 		}
 	}
 

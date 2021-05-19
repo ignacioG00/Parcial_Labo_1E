@@ -18,18 +18,16 @@
 #define OCUPADO 1
 #define BAJA -1
 
-#define ARBA 1
-#define IIBB 2
-#define GANANCIAS 3
 
 //*** ESTRUCTURA
 typedef struct {
 	int idRecaudaciones;
 	int mes;
 	float importe;
-	int tipoRecaudacion;
+	char tipoRecaudacion[20];
 	int idContribuyente;
 	int isEmpty;
+	char estado[20];
 } eRecaudaciones;
 //***
 

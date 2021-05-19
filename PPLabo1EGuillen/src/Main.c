@@ -33,7 +33,7 @@ int main(void) {
 	do {
 		//MENU PRINT
 		menu();
-		printf("INGRESE OPCION: ");
+		printf("* INGRESE OPCION DE MENU: ");
 		scanf("%d", &opc);
 
 		//MENU SWITCH
@@ -45,8 +45,10 @@ int main(void) {
 			break;
 		case 1:
 			//ALTA
-			if (eContribuyente_Alta(Contribuyente, TAM_CONTRIBUYENTE)) {
-				puts(" * Contribuyente DADO DE ALTA EXITOSAMENTE");
+			if (eContribuyente_Alta(Contribuyente, TAM_CONTRIBUYENTE))
+			{
+				eContribuyente_MostrarTodos(Contribuyente, TAM_CONTRIBUYENTE);
+				puts(" * CONTRIBUYENTE DADO DE ALTA EXITOSAMENTE *\n");
 			} else {
 				puts(" * NO SE DIO DE ALTA.");
 			}
@@ -55,23 +57,25 @@ int main(void) {
 			break;
 		case 2:
 			//MODIFICACION
-			if (eContribuyente_Modificacion(Contribuyente, TAM_CONTRIBUYENTE)) {
-				puts("\n * MODIFICACION DE Contribuyente EXITOSA\n");
+			if (eContribuyente_Modificacion(Contribuyente, TAM_CONTRIBUYENTE))
+			{
+				puts("\n * MODIFICACION DE CONTRIBUYENTE EXITOSA *\n");
 				eContribuyente_MostrarTodos(Contribuyente, TAM_CONTRIBUYENTE);
 			} else {
-				puts("\n * MODIFICACION DE Contribuyente CANCELADA");
+				puts("\n * MODIFICACION DE Contribuyente CANCELADA *\n");
 			}
 			system("pause");
 			break;
 		case 3:
 			//BAJA
 			if(flagContrib==1){
-			if (bajaDeContribuyente(Recaudaciones, TAM_RECAUDACIONES, Contribuyente, TAM_CONTRIBUYENTE)) {
-				puts("\n * BAJA DE Contribuyente EXITOSA");
+			if (bajaDeContribuyente(Recaudaciones, TAM_RECAUDACIONES, Contribuyente, TAM_CONTRIBUYENTE))
+			{
+				puts("\n * BAJA DE CONTRIBUYENTE EXITOSA *\n");
 
 				eContribuyente_MostrarTodos(Contribuyente, TAM_CONTRIBUYENTE);
 			} else {
-				puts("\n * BAJA DE Contribuyente CANCELADA");
+				puts("\n * BAJA DE CONTRIBUYENTE CANCELADA");
 			}
 			system("pause");
 			}else{
@@ -83,8 +87,9 @@ int main(void) {
 		case 4:
 			//ALTA RECAUDACIONES
 			if(flagContrib==1){
-			if (eRecaudacionesContribuyente_Alta(Recaudaciones, TAM_RECAUDACIONES, Contribuyente, TAM_CONTRIBUYENTE)) {
-				puts(" * RECAUDACION DADA DE ALTA EXITOSAMENTE");
+			if (eRecaudacionesContribuyente_Alta(Recaudaciones, TAM_RECAUDACIONES, Contribuyente, TAM_CONTRIBUYENTE))
+			{
+				puts("\n* RECAUDACION DADA DE ALTA EXITOSAMENTE *\n");
 				eRecaudaciones_MostrarTodos(Recaudaciones,TAM_RECAUDACIONES);
 			} else {
 				puts(" * NO SE DIO DE ALTA.");
@@ -92,12 +97,34 @@ int main(void) {
 			system("pause");
 			}else{
 				opc=1;
-				printf("*DEBE EXISTIR UN CONTRIBUYENTE*\n");
+				printf("\n* DEBE EXISTIR UN CONTRIBUYENTE *\n");
 			}
 			break;
+		case 5:
+			//CAMBIAR ESTADO A REFINANCIAR
+			if(flagContrib==1){
 
+				eRecaudaciones_MostrarTodos(Recaudaciones,TAM_RECAUDACIONES);
+				refinanciar_Recaudacion(Recaudaciones,Contribuyente,TAM_CONTRIBUYENTE,TAM_RECAUDACIONES);
+				puts("\n * ESTADO DE RECAUDACION CAMBIADO EXITOSAMENTE *\n");
+			}else{
+				opc=1;
+				printf("*DEBE EXISTIR UN/A CONTRIBUYENTE/RECAUDACION*\n");
+			}
+			break;
+		case 6:
+			//CAMBIAR ESTADO A SALDADO
+			if(flagContrib==1){
+			eRecaudaciones_MostrarTodos(Recaudaciones,TAM_RECAUDACIONES);
+			saldar_Recaudacion(Recaudaciones,Contribuyente,TAM_CONTRIBUYENTE,TAM_RECAUDACIONES);
+			puts(" \n* ESTADO DE RECAUDACION CAMBIADO EXITOSAMENTE *\n");
+			}else{
+				opc=1;
+				printf("\n* DEBE EXISTIR UN/A CONTRIBUYENTE/RECAUDACION *\n");
+			}
+			break;
 		case 7:
-			 //IMPRIMIR Contribuyente
+			 //IMPRIMIR CONTRIBUYENTE
 			if(flagContrib==1){
 			if(eContribuyente_MostrarTodos(Contribuyente, TAM_CONTRIBUYENTE))
 			{

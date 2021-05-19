@@ -25,7 +25,7 @@ typedef struct {
 	int idContribuyente;
 	char nombre[MAX_CHARS_CADENAS];
 	char apellido[MAX_CHARS_CADENAS];
-	int cuil;
+	char cuil[MAX_CHARS_CADENAS];
 	int isEmpty;
 } eContribuyente;
 //***
