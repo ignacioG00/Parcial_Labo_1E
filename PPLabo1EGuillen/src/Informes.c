@@ -119,6 +119,8 @@ int refinanciar_Recaudacion(eRecaudaciones arrayRecaudaciones[],eContribuyente a
 
 	indexC= eContribuyente_BuscarPorID(arrayContribuyente,TAM_Recaudaciones,aux);
 
+	puts("\n\t| LISTADO Contribuyente |");
+	printf("| %5s | %15s | %15s | %15s |\n\n ","ID" ,"NOMBRE","APELLIDO","CUIL");
 	eContribuyente_MostrarUno(arrayContribuyente[indexC]);
 
 	if (validate_Exit_SN("DESEA CAMBIAR EL ESTADO A 'REFINANCIAR'? SI[S] - NO[N]: ",
@@ -134,8 +136,7 @@ int saldar_Recaudacion(eRecaudaciones arrayRecaudaciones[],eContribuyente arrayC
 							,int TAM_Contribuyente,int TAM_Recaudaciones)
 {
 	int rtn = 0;
-	puts("\t *** RECAUDACIONES ***");
-	puts("\t *** CAMBIO DE ESTADO A 'SALDADO' ***");
+
 	int auxID = get_Int("SELECCIONE ID DE RECAUDACION PARA DAR CON EL CONTRIBUYENTE: \n",
 			"ERROR. REINGRESE: \n");
 	int indexC;
@@ -154,6 +155,8 @@ int saldar_Recaudacion(eRecaudaciones arrayRecaudaciones[],eContribuyente arrayC
 
 	indexC= eContribuyente_BuscarPorID(arrayContribuyente,TAM_Recaudaciones,aux);
 
+	puts("\n\t| LISTADO CONTRIBUYENTE |");
+	printf("| %5s | %15s | %15s | %15s |\n\n ","ID" ,"NOMBRE","APELLIDO","CUIL");
 	eContribuyente_MostrarUno(arrayContribuyente[indexC]);
 
 	if (validate_Exit_SN("DESEA CAMBIAR EL ESTADO A 'SALDADO'? SI[S] - NO[N]: ",
@@ -169,23 +172,88 @@ int imprimir_Contribuyentes(eRecaudaciones arrayRecaudaciones[], int TAM_Recauda
 		,eContribuyente arrayContribuyente[], int TAM_Contribuyente)
 {
 	int retorno=-1;
+	int flagPrimerContrib=0;
 	if(arrayRecaudaciones!=NULL && arrayContribuyente!=NULL && TAM_Recaudaciones>0 && TAM_Contribuyente>0)
 	{
 		for(int i=0; i<TAM_Contribuyente; i++)
 		{
 			if(arrayContribuyente[i].isEmpty)
 			{
+
+				puts("\n\t | CONTRIBUYENTE |");
+				printf("| %5s | %15s | %15s | %15s |\n\n ","ID" ,"NOMBRE","APELLIDO","CUIL");
 				eContribuyente_MostrarUno(arrayContribuyente[i]);
-				for(int b=0;i<TAM_Recaudaciones;i++)
+				flagPrimerContrib=1;
+
+				for(int b=0;b<TAM_Recaudaciones;b++)
 				{
 					if(arrayRecaudaciones[b].idContribuyente==arrayContribuyente[i].idContribuyente)
 					{
+						if(flagPrimerContrib){
+						puts("\n\t| LISTADO RECAUDACIONES | ");
+						printf("| %5s | %5s | %10s | %15s | %15s | %10s |\n\n ",
+								"ID RECAUDACION" ,
+								"MES","IMPORTE",
+								"TIPO RECAUDACION",
+								"ID CONTRIBUYENTE",
+								"ESTADO");
+						flagPrimerContrib=0;
+						}
 						eRecaudaciones_MostrarUno(arrayRecaudaciones[b]);
 					}
 				}
+			}else{
+				continue;
 			}
 		}
+		retorno=1;
 	}
 	return retorno;
 }
+
+int imprimir_Recaudaciones(eRecaudaciones arrayRecaudaciones[], int TAM_Recaudaciones
+		,eContribuyente arrayContribuyente[], int TAM_Contribuyente)
+{
+	int retorno=-1;
+	int flagPrimerRec=0;
+	if(arrayRecaudaciones!=NULL && arrayContribuyente!=NULL && TAM_Recaudaciones>0 && TAM_Contribuyente>0)
+	{
+		for(int i=0; i<TAM_Recaudaciones; i++)
+		{
+			if(arrayRecaudaciones[i].isEmpty && strcmp(arrayRecaudaciones[i].estado,"SALDADO")==0)
+			{
+				if(flagPrimerRec==0){
+				puts("\n\t| LISTADO RECAUDACIONES | ");
+				printf("| %5s | %5s | %10s | %15s | %15s | %10s | %15s | %15s | %15s | \n\n ",
+						"ID RECAUDACION" ,"MES","IMPORTE","TIPO RECAUDACION", "ID CONTRIBUYENTE", "ESTADO","CUIL","NOMBRE","APELLIDO");
+				flagPrimerRec=1;
+				}
+
+				for(int b=0;b<TAM_Recaudaciones;b++)
+				{
+					if(arrayRecaudaciones[i].idContribuyente==arrayContribuyente[b].idContribuyente)
+					{
+
+							printf("%5d %15d %15f %10s %20d %20s %15s %15s %15s \n\n",
+									arrayRecaudaciones[i].idRecaudaciones,
+									arrayRecaudaciones[i].mes,
+									arrayRecaudaciones[i].importe,
+									arrayRecaudaciones[i].tipoRecaudacion,
+									arrayRecaudaciones[i].idContribuyente,
+									arrayRecaudaciones[i].estado,
+									arrayContribuyente[b].cuil,
+									arrayContribuyente[b].nombre,
+									arrayContribuyente[b].apellido);
+
+					}
+				}
+			}else{
+				continue;
+			}
+		}
+		retorno=1;
+	}
+	return retorno;
+}
+
 #endif /* ENTIDADES_C_ */

@@ -5,7 +5,7 @@
 
 //VALIDACIONES
 
-int esCUIT(char* cadena)
+int esCuil(char* cadena)
 {
     int retorno=1;
     int i;
@@ -170,7 +170,7 @@ int get_Cuil(char* pResultado, char* mensaje, char* mensajeError, int reintentos
         do
         {
         	printf("%s",mensaje);
-            if((myGets(bufferStr, 14)==0) && (esCUIT(bufferStr)==1))
+            if((myGets(bufferStr, 14)==0) && (esCuil(bufferStr)==1))
 			{
                 strncpy(pResultado,bufferStr,maxTamanio);
                 retorno=0;
@@ -494,6 +494,7 @@ void menu(void)
 	puts("5 - CAMBIAR ESTADO A REFINANCIAR");
 	puts("6 - CAMBIAR ESTADO A SALDADO");
 	puts("7 - IMPRIMIR CONTRIBUYENTE");
+	puts("8 - IMPRIMIR RECAUDACIONES SALDADAS");
 }
 
 

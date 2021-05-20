@@ -75,9 +75,7 @@ int eContribuyente_BuscarPorID(eContribuyente array[], int TAM, int ID) {
 
 void eContribuyente_MostrarUno(eContribuyente Contribuyente) {
 	//PRINTF DE UN SOLO Contribuyente
-	puts("\n\t> LISTADO Contribuyente");
-	printf("%5s %15s %15s %15s \n\n ",
-			"ID" ,"NOMBRE","APELLIDO","CUIL");
+
 	printf("%5d %15s %15s %20s \n\n", Contribuyente.idContribuyente,Contribuyente.nombre,Contribuyente.apellido,Contribuyente.cuil);
 }
 
@@ -88,7 +86,7 @@ int eContribuyente_MostrarTodos(eContribuyente array[], int TAM) {
 
 	//CABECERA
 	puts("\n\t> LISTADO Contribuyente");
-	printf("%5s %15s %15s %15s \n\n ",
+	printf("| %5s | %15s | %15s | %15s |\n\n ",
 			"ID" ,"NOMBRE","APELLIDO","CUIL"); //AGREGAR TITULOS DE COLUMNA (QUITAR DE VER QUE NO ES NECESARIO)
 
 	//SI EXISTE EL ARRAY Y EL LIMITE ES VALIDO
@@ -183,22 +181,14 @@ int eContribuyente_Alta(eContribuyente array[], int TAM) {
 	int retorno = 0;
 	eContribuyente auxContribuyente;
 
-	//BUSCO ESPACIO EN ARRAY
 	int index = eContribuyente_ObtenerIndexLibre(array, TAM);
 
-	//SI INDEX == -1 ARRAY LLENO
-	//SI INDEX != -1 TENGO EN INDEX POSICION DE ARRAY LIBRE
 	if (index != -1) {
-		//PIDO DATOS - CARGO Contribuyente AUXILIAR
 		auxContribuyente = eContribuyente_CargarDatos();
 		if(validate_Exit_SN("DESEA CONTINUAR? SI[S] NO[N]: ","ERROR.REINGRESE")){
-		//SETEO ID UNICO - VARIABLE ESTATICA AUTOINCREMENTAL
 		auxContribuyente.idContribuyente = eContribuyente_ObtenerID() + 999;
-		//CAMBIO SU ESTADO A "OCUPADO"
 		auxContribuyente.isEmpty = OCUPADO;
-		//SETEO EL ARRAY CON AUXILIAR EN INDEX LIBRE OBTENIDO PREVIAMENTE
 		array[index] = auxContribuyente;
-		//RETORNO 1 PARA SABER QUE FUE DADO DE ALTA SATISFACTORIAMENTE
 		retorno = 1;
 		}
 	}

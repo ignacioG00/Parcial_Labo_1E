@@ -17,7 +17,7 @@
 
 //Validaciones
 
-int esCUIT(char* cadena);
+int esCuil(char* cadena);
 int validate_OnlyNumberInt(char* pData);
 int validate_OnlyAlphabet(char *pData);
 int validate_OnlyAlphabetWithSpaces(char *pData);

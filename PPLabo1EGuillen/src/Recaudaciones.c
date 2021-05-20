@@ -188,8 +188,8 @@ eRecaudaciones eRecaudaciones_CargarDatos(void) {
 	int opc;
 	auxiliar.mes = get_IntRange("INGRESE MES: ", "ERROR. REINGRESE MES: ", 1, 12);
 	get_FloatRange(&auxiliar.importe,"INGRESE IMPORTE: ", "ERROR.REINGRESE IMPORTE:",0,250000,2);
-	opc=get_IntRange("\t1- ARBA \n\t2 - IIBB \n\t3 - GANANCIAS","ERROR REINGRESE EL TIPO DE RECAUDACION:\n "
-			"\t1- ARBA \n\t2 - IIBB \n\t3 - GANANCIAS",1,3);
+	opc=get_IntRange("INGRESE TIPO DE RECAUDACION \n \t1- ARBA \n\t2 - IIBB \n\t3 - GANANCIAS\n","ERROR REINGRESE EL TIPO DE RECAUDACION:\n "
+			"INGRESE TIPO DE RECAUDACION \t1 - ARBA \n\t2 - IIBB \n\t3 - GANANCIAS\n",1,3);
 	switch(opc){
 	case 1:
 		strcpy(auxiliar.tipoRecaudacion, "ARBA");
